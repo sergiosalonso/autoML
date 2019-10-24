@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load staticfiles%}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'accounts:login' %}">autoML</a>
+        <ul class="navbar-nav justify-content-end">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'accounts:logout'%}">Log Out</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:change-password' %}">Change Passwords</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"></a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:login' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'admin:index'%}">Admin</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container content">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+
+
+  </body>
+</html>
