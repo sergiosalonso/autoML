@@ -5,7 +5,7 @@ from ml_core import models
 
 class ProcessForm(forms.ModelForm):
     class Meta:
-        fields = ('title','slug','description')
+        fields = ('title','description')
         model = models.Process
 #Customization
     def __init__(self, *args, **kwargs):
