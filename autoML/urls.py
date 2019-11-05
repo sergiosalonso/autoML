@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls', namespace='accounts')),
+    path('process/',include('ml_core.urls', namespace='process')),
     path('', views.IndexView.as_view(), name='index'),
     path('logout-succes/', views.LogOutView.as_view(), name='success-logout'),
     path('login-succes/', views.LogInView.as_view(), name='success-login'),

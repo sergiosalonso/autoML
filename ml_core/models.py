@@ -7,7 +7,7 @@ from django.utils import timezone
 class Process(models.Model):
     title = models.CharField(max_length=250, blank=False, verbose_name='Title')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Creador', related_name='created_by')
-    slug = models.SlugField(allow_unicode=True, unique=True, blank=True)
+    #slug = models.SlugField(allow_unicode=True, unique=True, blank=True)
     description = models.CharField(max_length=250, blank=True, verbose_name='Description')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -49,4 +49,6 @@ class AwsInstance(models.Model):
 class ModelMachine(models.Model):
     model = models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
     machine = models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
-    process = models.ForeignKey("Process", on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
+
+    def __str__(self):
+        return (self.model.name+''+self.machine.name)

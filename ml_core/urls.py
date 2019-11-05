@@ -4,7 +4,9 @@ from django.urls import reverse_lazy
 from . import views
 app_name= "ml_core"
 urlpatterns = [
-    #path('create-process/', views.SucessForm.as_view(), name='form'),
-    #path('list-process'),views.ListView.as_view(), name='process'),
-    #<int:pk>
+    path('create/', views.CreateProcess.as_view(), name='create-process'),
+    path('<int:pk>/', views.DetailProcess.as_view(), name='process'),
+    path('<int:pk>/update/', views.UpdateProcess.as_view(), name='update-process'),
+    path('<int:pk>/delete/', views.DeleteProcess.as_view(), name='delete-process'),
+    path('my-process/', views.ListProcesses.as_view(), name='list-process'),
 ]

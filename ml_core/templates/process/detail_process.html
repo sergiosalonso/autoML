@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+{% block content %}
+<div class="jumbotron">
+  {%if user == process.user %}
+  <h1 class="display-4">{{process.title}}</h1>
+  <p>Descripcion: {{process.description}}</p>
+  <p>Creator: {{process.user}}</p>
+  <p>Creation hour: {{process.created_At}}</p>
+  <p>Update hour: {{process.updated_at}}</p>
+  <p>Train: {{process.train}}</p>
+  <p>Test: {{process.test}}</p>
+  <p>CSV: {{process.csv}}</p>
+  <p>Models: process.ml_models</p>
+  <table>
+    <tr>
+      <td><a class="btn btn-warning" href="{% url 'ml_core:update-process' pk=process.id %}">Update</a></td>
+      <td><a class="btn btn-danger" href="{% url 'ml_core:delete-process' pk=process.id %}">Delete</a></td>
+    </tr>
+
+  {% endif %}
+  </table>
+</div>
+
+{% endblock %}

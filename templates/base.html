@@ -11,7 +11,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'accounts:login' %}">autoML</a>
+        <a class="navbar-brand" href="{% url 'ml_core:list-process' %}">autoML</a>
         <ul class="navbar-nav justify-content-end">
           {% if user.is_authenticated %}
           <li class="nav-item">
@@ -21,7 +21,10 @@
             <a class="nav-link" href="{% url 'accounts:change-password' %}">Change Passwords</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"></a>
+            <a class="nav-link" href="{% url 'ml_core:list-process' %}">My processes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ml_core:create-process' %}">Create Process</a>
           </li>
           {% else %}
           <li class="nav-item">

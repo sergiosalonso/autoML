@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+{% block content %}
+<h1>My processes</h1>
+
+<div class="row">
+  {% for process in process_list %}
+    <div class="col-md-4 col-sm-12">
+        <div class="card h-100 text-center">
+          <div class="card-header h-100">
+            <h5 class="card-title text-align"><a href="{%url 'ml_core:process' pk=process.id%}">{{process.title}}</a></h5>
+          </div>
+        </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
