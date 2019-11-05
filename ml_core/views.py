@@ -42,7 +42,7 @@ class DeleteProcess(LoginRequiredMixin,DeleteView):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user.id)
 
-class ListProcesses(ListView):
+class ListProcesses(LoginRequiredMixin,ListView):
     model=Process
     context_object_name='process_list'
     template_name='process/list_process.html'
