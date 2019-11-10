@@ -76,15 +76,16 @@ WSGI_APPLICATION = 'autoML.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+#Only production
 '''
-Only production
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'autoML',
             'USER': 'demouser',
             'PASSWORD': 'demopassword',
-            'HOST': '3.91.232.101',
+            'HOST': '34.227.143.48',
             'PORT': '3306',
         }
     }
@@ -95,6 +96,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',

@@ -3,7 +3,8 @@ from django.urls import reverse
 from django.utils.text import slugify
 from accounts.models import User
 from django.utils import timezone
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 class Process(models.Model):
     title = models.CharField(max_length=250, blank=False, verbose_name='Title')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Creador', related_name='created_by')
@@ -14,7 +15,8 @@ class Process(models.Model):
     train = models.FloatField()
     test = models.FloatField()
     csv = models.ForeignKey("CSVFiles", on_delete=models.SET_NULL, blank=False, null=True, related_name='csv')
-    ml_models = models.ManyToManyField("ModelMachine")
+    model= models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='model')
+    machine= models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='instance')
 
     def __str__(self):
         return self.title
@@ -33,9 +35,15 @@ class CSVFiles(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
     file = models.FileField(upload_to="csv/")
 
+@receiver(post_delete, sender=CSVFiles)
+def submission_delete(sender, instance, **kwargs):
+    '''
+        Delete local file when deleting
+    '''
+    instance.file.delete(False)
+
 class MLModel(models.Model):
     name = models.CharField(max_length=250, blank=False, unique=True, verbose_name='Name')
-    #ml_models = models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
     def __str__(self):
         return self.name
 
@@ -45,10 +53,15 @@ class AwsInstance(models.Model):
 
     def __str__(self):
         return self.name
-
-class ModelMachine(models.Model):
-    model = models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
-    machine = models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
+'''
+class Configurations(models.Model):
+    process = models.ForeignKey("Process", on_delete=models.SET_NULL, blank=True, null=True, related_name='process')
+    configuration =
 
     def __str__(self):
-        return (self.model.name+''+self.machine.name)
+        return (self.process.id+' '+self.model.name+' '+self.machine.name)
+
+class Configuration(models.Model):
+    model = models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='model')
+    machine = models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='machine')
+'''

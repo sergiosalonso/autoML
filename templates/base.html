@@ -26,6 +26,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'ml_core:create-process' %}">Create Process</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ml_core:list-csv' %}">List csv</a>
+          </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'accounts:login' %}">Log In</a>
