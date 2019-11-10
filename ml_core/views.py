@@ -102,6 +102,7 @@ class CreateConfiguration(LoginRequiredMixin, CreateView):
     fields = ('process','model', 'machine')
     template_name='process/create_configuration.html'
 '''
+response=0
 class RPCRecieverTest(LoginRequiredMixin, TemplateView):
     template_name = "process/rpc.html"
     def get_context_data(self, **kwargs):
@@ -109,7 +110,10 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['model']=self.kwargs['model']
         context['machine']=self.kwargs['machine']
         thread1 = threading.Thread(target = execute_server_code, args = self.kwargs['machine'])
-        context['message']=rpc()
+        thread2 = threading.Thread(target = rpc)
+        thread1.start()
+        thread1.start()
+        context['message']=response
 
         return context
 
