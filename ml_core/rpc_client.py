@@ -12,8 +12,8 @@ class FibonacciRpcClient(object):
                                                credentials)
         self.connection = pika.BlockingConnection(parameters)
         self.channel = self.connection.channel()
-        self.channel.queue_declare(queue='rpc_queue_fibo')
-        self.channel.queue_declare(queue='rpc_queue_suma')
+        result=self.channel.queue_declare(queue='rpc_queue_fibo')
+        #result=self.channel.queue_declare(queue='rpc_queue_suma')
         #result = self.channel.queue_declare(queue='', exclusive=True)
         self.callback_queue = result.method.queue
 
@@ -56,8 +56,9 @@ class FibonacciRpcClient(object):
             self.connection.process_data_events()
         return int(self.response)
 
-
+'''
 fibonacci_rpc = FibonacciRpcClient()
 print(" [x] Requesting fib(30)")
 response = fibonacci_rpc.call_fibo(30)
 print(" [.] Got %r" % response)
+'''
