@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .models import Process, CSVFiles
 from .rpc_client import FibonacciRpcClient
 import threading
+import time
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
     fields = ('title', 'description', 'train', 'test', 'csv', 'model', 'machine')
@@ -109,27 +110,30 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['model']=self.kwargs['model']
         context['machine']=self.kwargs['machine']
-        thread1 = threading.Thread(target = execute_server_code, args = self.kwargs['machine'])
+        print(type(self.kwargs['machine']))
+        thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'],))
         thread2 = threading.Thread(target = rpc)
         thread1.start()
-        thread1.start()
+        thread2.start()
+
+
         context['message']=response
 
         return context
 
 def execute_server_code(machine):
     import paramiko
-    import time
+    print('Conectando')
     ssh = paramiko.SSHClient()
-    k=paramiko.RSAKey.from_private_key_file('/Users/pablogarciarubio/Desktop/cluster1.pem')
+    k=paramiko.RSAKey.from_private_key_file('ml_core/cluster1.pem')
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     print('Conectando')
     #ec2-184-72-96-38.compute-1.amazonaws.com
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
 
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 server.py", get_pty=True, timeout=5.0)
-    time.sleep(2)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=8.0)
+    #time.sleep(2)
     ssh_stdin.flush()
 
     for line in iter(ssh_stdout.readline,""):

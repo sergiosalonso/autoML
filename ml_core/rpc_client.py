@@ -5,12 +5,16 @@ import uuid
 class FibonacciRpcClient(object):
 
     def __init__(self):
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
-
+        credentials = pika.PlainCredentials('test', 'test')
+        parameters = pika.ConnectionParameters('172.31.85.15',
+                                               5672,
+                                               '/',
+                                               credentials)
+        self.connection = pika.BlockingConnection(parameters)
         self.channel = self.connection.channel()
-
-        result = self.channel.queue_declare(queue='', exclusive=True)
+        self.channel.queue_declare(queue='rpc_queue_fibo')
+        self.channel.queue_declare(queue='rpc_queue_suma')
+        #result = self.channel.queue_declare(queue='', exclusive=True)
         self.callback_queue = result.method.queue
 
         self.channel.basic_consume(
@@ -51,3 +55,9 @@ class FibonacciRpcClient(object):
         while self.response is None:
             self.connection.process_data_events()
         return int(self.response)
+
+
+fibonacci_rpc = FibonacciRpcClient()
+print(" [x] Requesting fib(30)")
+response = fibonacci_rpc.call_fibo(30)
+print(" [.] Got %r" % response)
