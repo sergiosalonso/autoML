@@ -114,13 +114,13 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'],))
         thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'],))
         thread1.start()
-        time.sleep(0.5)
-        thread2.start()
 
-        #thread2.join()
+        thread2.start()
+        thread2.join()
+        thread1.join()
 
         context['message']=response.pop()
-        
+
         return context
 
 def execute_server_code(machine):
@@ -134,7 +134,7 @@ def execute_server_code(machine):
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
 
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=3.0)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=1.0)
     #time.sleep(2)
     ssh_stdin.flush()
 
