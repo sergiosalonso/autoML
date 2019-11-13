@@ -48,11 +48,11 @@ if __name__ == '__main__':
 
     channel = connection.channel()
 
-    channel.queue_declare(queue='rpc_queue')
+    channel.queue_declare(queue='rpc_queue_fibo')
     channel.queue_declare(queue='rpc_queue_suma')
 
     channel.basic_qos(prefetch_count=1)
-    channel.basic_consume(queue='rpc_queue', on_message_callback=on_request1)
+    channel.basic_consume(queue='rpc_queue_fibo', on_message_callback=on_request1)
     channel.basic_consume(queue='rpc_queue_suma', on_message_callback=on_request2)
     print(" [x] Awaiting RPC requests")
     channel.start_consuming()
