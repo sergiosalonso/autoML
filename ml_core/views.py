@@ -119,7 +119,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         #thread2.join()
 
         context['message']=response.pop()
-
+        response=[]
         return context
 
 def execute_server_code(machine):
