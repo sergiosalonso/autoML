@@ -103,7 +103,7 @@ class CreateConfiguration(LoginRequiredMixin, CreateView):
     fields = ('process','model', 'machine')
     template_name='process/create_configuration.html'
 '''
-response=0
+response=[]
 class RPCRecieverTest(LoginRequiredMixin, TemplateView):
     template_name = "process/rpc.html"
     def get_context_data(self, **kwargs):
