@@ -114,12 +114,13 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'],))
         thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'],))
         thread1.start()
+        time.sleep(0.5)
         thread2.start()
 
         #thread2.join()
 
         context['message']=response.pop()
-        response=[]
+        
         return context
 
 def execute_server_code(machine):
