@@ -116,8 +116,9 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         thread1.start()
         thread2.start()
 
+        thread2.join()
 
-        context['message']=response
+        context['message']=response.pop()
 
         return context
 
@@ -132,7 +133,7 @@ def execute_server_code(machine):
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
 
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=8.0)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=3.0)
     #time.sleep(2)
     ssh_stdin.flush()
 
@@ -145,6 +146,6 @@ def rpc():
     #https://stackoverflow.com/questions/31834743/get-output-from-a-paramiko-ssh-exec-command-continuously/39231690#39231690
     fibonacci_rpc = FibonacciRpcClient()
     print(" [x] Requesting fib(30)")
-    response = fibonacci_rpc.call_fibo(30)
+    response.append(fibonacci_rpc.call_fibo(30))
     print(" [.] Got %r" % response)
-    return response
+    return 1
