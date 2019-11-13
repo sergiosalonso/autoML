@@ -148,7 +148,7 @@ def rpc(model):
     print(" [x] Requesting fib(30)")
     if model == 'suma':
         response.append(fibonacci_rpc.call_suma(30))
-    else if model == 'fibo':
+    elif model == 'fibo':
         response.append(fibonacci_rpc.call_fibo(30))
     print(" [.] Got %r" % response[-1])
     return 1
