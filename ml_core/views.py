@@ -119,9 +119,9 @@ class CreateInstance(LoginRequiredMixin, CreateView):
             Add validation and execute process
         '''
         self.object = form.save(commit=False)
+        autostart(self.object.public_ip)
         self.object.save()
         print(self.object.public_ip)
-        autostart(self.object.public_ip)
         return super().form_valid(form)
 
 response=[]
@@ -185,18 +185,9 @@ def autostart(machine):
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
 
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('''sudo apt-get update
-    && sudo apt-get --assume-yes install python3-pip && sudo pip3 install pika && sudo
-    apt-get --assume-yes install rabbitmq-server &&
-    sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie &&
-    sudo echo "ZOJMATTWHXUJOSFWWNVK" > "/var/lib/rabbitmq/.erlang.cookie" &&
-    sudo chmod 600 /var/lib/rabbitmq/.erlang.cookie &&
-    sudo service rabbitmq-server restart &&
-    sudo rabbitmqctl stop_app &&
-    sudo rabbitmqctl join_cluster rabbit@ip-172-31-85-15 &&
-    sudo rabbitmqctl start_app''', get_pty=True)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('sudo apt-get update && sudo apt-get --assume-yes install python3-pip && sudo pip3 install pika && sudo apt-get --assume-yes install rabbitmq-server && sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie && sudo echo "ZOJMATTWHXUJOSFWWNVK" > "/var/lib/rabbitmq/.erlang.cookie" && sudo chmod 600 /var/lib/rabbitmq/.erlang.cookie && sudo service rabbitmq-server restart && sudo rabbitmqctl stop_app && sudo rabbitmqctl join_cluster rabbit@ip-172-31-85-15 && sudo rabbitmqctl start_app', get_pty=True)
     print('FUNCIONAs')
-    scp_command='scp -i ml_core/cluster1.pem rpc_server.py ubuntu@'+machine+':/home/ubuntu'
+    scp_command='scp -i ml_core/cluster1.pem ml_core/rpc_server.py ubuntu@'+machine+':/home/ubuntu'
     os.system(scp_command)
     ssh_stdin.flush()
 
