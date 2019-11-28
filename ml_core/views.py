@@ -181,15 +181,15 @@ def autostart(machine):
     k=paramiko.RSAKey.from_private_key_file('ml_core/cluster1.pem')
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     print('Conectando')
-    
+
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
 
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('''
     sudo apt-get update \
-    && sudo apt-get --assume-yes install python3-pip \
+    && sudo apt-get -y install python3-pip \
     && sudo pip3 install pika \
-    && sudo apt-get --assume-yes install rabbitmq-server \
+    && sudo apt-get -y install rabbitmq-server \
     && sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie \
     && sudo echo "ZOJMATTWHXUJOSFWWNVK" > "/var/lib/rabbitmq/.erlang.cookie" \
     && sudo chmod 600 /var/lib/rabbitmq/.erlang.cookie \
