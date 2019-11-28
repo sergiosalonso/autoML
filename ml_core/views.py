@@ -177,7 +177,7 @@ def rpc(model):
 def autostart(machine):
     print('Conectando')
     ssh = paramiko.SSHClient()
-    k=paramiko.RSAKey.from_private_key_file('cluster1.pem')
+    k=paramiko.RSAKey.from_private_key_file('ml_core/cluster1.pem')
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     print('Conectando')
     #ec2-184-72-96-38.compute-1.amazonaws.com
