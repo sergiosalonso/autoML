@@ -120,6 +120,7 @@ class CreateInstance(LoginRequiredMixin, CreateView):
         '''
         self.object = form.save(commit=False)
         self.object.save()
+        print(self.object.public_ip)
         autostart(self.object.public_ip)
         return super().form_valid(form)
 
@@ -185,7 +186,7 @@ def autostart(machine):
     print('Lanzando comando')
 
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('''sudo apt-get update
-    && sudo apt-get -y install python3-pip && sudo pip3 install pika && sudo
+    && sudo apt-get --assume-yes install python3-pip && sudo pip3 install pika && sudo
     apt-get --assume-yes install rabbitmq-server &&
     sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie &&
     sudo echo "ZOJMATTWHXUJOSFWWNVK" > "/var/lib/rabbitmq/.erlang.cookie" &&
@@ -193,10 +194,10 @@ def autostart(machine):
     sudo service rabbitmq-server restart &&
     sudo rabbitmqctl stop_app &&
     sudo rabbitmqctl join_cluster rabbit@ip-172-31-85-15 &&
-    sudo rabbitmqctl start_app''', get_pty=True,)
-    scp_command='scp -i cluster1.pem rpc_server.py ubuntu@'+machine+':/home/ubuntu'
+    sudo rabbitmqctl start_app''', get_pty=True)
+    print('FUNCIONAs')
+    scp_command='scp -i ml_core/cluster1.pem rpc_server.py ubuntu@'+machine+':/home/ubuntu'
     os.system(scp_command)
-    #time.sleep(2)
     ssh_stdin.flush()
 
     for line in iter(ssh_stdout.readline,""):
