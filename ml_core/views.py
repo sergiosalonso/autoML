@@ -120,7 +120,7 @@ class CreateInstance(LoginRequiredMixin, CreateView):
         '''
         self.object = form.save(commit=False)
         self.object.save()
-        autostart(self.object.ip)
+        autostart(self.object.public_ip)
         return super().form_valid(form)
 
 response=[]
