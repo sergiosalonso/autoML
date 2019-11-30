@@ -191,7 +191,7 @@ def autostart(machine):
     && sudo pip3 install pika \
     && sudo apt-get --assume-yes install rabbitmq-server \
     && sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie \
-    && sudo echo "ZOJMATTWHXUJOSFWWNVK" > "/var/lib/rabbitmq/.erlang.cookie" \
+    && sudo echo "ZHTSEYRYMXJDPWIRWXPO" > "/var/lib/rabbitmq/.erlang.cookie" \
     && sudo chmod 600 /var/lib/rabbitmq/.erlang.cookie \
     && sudo service rabbitmq-server restart \
     && sudo rabbitmqctl stop_app \
