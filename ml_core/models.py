@@ -34,6 +34,7 @@ class Process(models.Model):
 class CSVFiles(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
     file = models.FileField(upload_to="csv/")
+    
 
 @receiver(post_delete, sender=CSVFiles)
 def submission_delete(sender, instance, **kwargs):
