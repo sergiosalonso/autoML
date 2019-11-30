@@ -133,7 +133,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['machine']=self.kwargs['machine']
         print(type(self.kwargs['machine']))
         thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'],))
-        thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'],self.kwargs['csv'],))
+        thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'], self.kwargs['csv'],))
         thread1.start()
 
         thread2.start()
