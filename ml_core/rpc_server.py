@@ -7,8 +7,8 @@ def fib(n):
         return 1
     else:
         return fib(n - 1) + fib(n - 2)
-def suma(n):
-    return n+n
+def suma(csv):
+    return "LOAD"
 
 def on_request1(ch, method, props, body):
     n = int(body)

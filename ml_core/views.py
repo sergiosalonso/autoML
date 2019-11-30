@@ -133,7 +133,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['machine']=self.kwargs['machine']
         print(type(self.kwargs['machine']))
         thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'],))
-        thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'],))
+        thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'],self.kwargs['csv'],))
         thread1.start()
 
         thread2.start()
@@ -164,7 +164,7 @@ def execute_server_code(machine):
 
     ssh.close()
 
-def rpc(model):
+def rpc(model, csv):
     #https://stackoverflow.com/questions/31834743/get-output-from-a-paramiko-ssh-exec-command-continuously/39231690#39231690
     fibonacci_rpc = FibonacciRpcClient()
     print(" [x] Requesting fib(30)")
