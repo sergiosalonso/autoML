@@ -193,7 +193,7 @@ def autostart(machine):
     && sudo pip3 install xgboost \
     && sudo pip3 install numpy \
     && sudo pip3 install pandas \
-    pip install scikit-learn \
+    && sudo pip3 install scikit-learn \
     && sudo pip3 install pika \
     && sudo apt-get --assume-yes install rabbitmq-server \
     && sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie \
