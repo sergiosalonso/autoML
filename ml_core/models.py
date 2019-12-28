@@ -34,7 +34,12 @@ class Process(models.Model):
 
 class CSVFiles(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
+    name = models.CharField(max_length=250, blank=False, verbose_name='name')
     file = models.FileField(upload_to="csv/")
+
+    def save(self, *args, **kwargs):
+        self.name= os.path.basename(self.file.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return os.path.basename(self.file.name)
