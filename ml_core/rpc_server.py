@@ -49,7 +49,7 @@ def on_request1(ch, method, props, body):
     body = body.decode('utf-8').split()
     df=get_dataset(body[0])
     print(" [.] svm")
-    X_train, X_test, y_train, y_test=basic_preprocessing(df, body[1], body[2])
+    X_train, X_test, y_train, y_test=basic_preprocessing(df, body[1], int(body[2])*0.01)
     response = svm(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -63,7 +63,7 @@ def on_request2(ch, method, props, body):
     body = body.decode('utf-8').split()
     df=get_dataset(body[0])
     print(" [.] xgboost")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], body[2])
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
     response = xgboost(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -77,7 +77,7 @@ def on_request3(ch, method, props, body):
     body = body.decode('utf-8').split()
     df=get_dataset(body[0])
     print(" [.] linear")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], body[2])
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
     response = linear(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -91,7 +91,7 @@ def on_request4(ch, method, props, body):
     body = body.decode('utf-8').split()
     df=get_dataset(body[0])
     print(" [.] logistic")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], body[2])
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
     response = logistic(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
