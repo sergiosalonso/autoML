@@ -35,7 +35,7 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=str(dataset+" "+target+" "+test))
+            body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
         return str(self.response)
@@ -50,7 +50,7 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=str(dataset+" "+target+" "+test))
+            body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
         return str(self.response)
@@ -65,7 +65,7 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=str(dataset+" "+target+" "+test))
+            body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
         return str(self.response)
@@ -80,7 +80,7 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=str(dataset+" "+target+" "+test))
+            body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
         return str(self.response)
