@@ -86,9 +86,6 @@ class CreateCSV(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        #fibonacci_rpc = FibonacciRpcClient()
-        #response1 = fibonacci_rpc.call_fibo(30)
-        #print(" [.] Got %r" % response1)
 
         return super().form_valid(form)
 
