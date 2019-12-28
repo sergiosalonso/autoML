@@ -3,7 +3,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView,
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .models import Process, CSVFiles, AwsInstance
-from .rpc_client import FibonacciRpcClient
+from .rpc_client import MLRpcClient
 import threading
 import time
 import paramiko
@@ -132,8 +132,8 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['model']=self.kwargs['model']
         context['machine']=self.kwargs['machine']
         print(type(self.kwargs['machine']))
-        thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'],))
-        thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'], self.kwargs['csv'],))
+        thread1 = threading.Thread(target = execute_server_code, args = (self.kwargs['machine'], self.kwargs['csv'],))
+        thread2 = threading.Thread(target = rpc, args = (self.kwargs['model'], self.kwargs['csv'], self.kwargs['target'], self.kwargs['test'],))
         thread1.start()
 
         thread2.start()
@@ -144,7 +144,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
 
         return context
 
-def execute_server_code(machine):
+def execute_server_code(machine, csv):
 
     print('Conectando')
     ssh = paramiko.SSHClient()
@@ -154,8 +154,8 @@ def execute_server_code(machine):
     #ec2-184-72-96-38.compute-1.amazonaws.com
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
-
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=2.0)
+    scp_command='scp -i ml_core/cluster1.pem media/csv/'+csv+' ubuntu@'+machine+':/home/ubuntu'
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(scp_command+" && python3 rpc_server.py", get_pty=True, timeout=7.0)
     #time.sleep(2)
     ssh_stdin.flush()
 
@@ -164,14 +164,18 @@ def execute_server_code(machine):
 
     ssh.close()
 
-def rpc(model, csv):
+def rpc(model, dataset, target, test):
     #https://stackoverflow.com/questions/31834743/get-output-from-a-paramiko-ssh-exec-command-continuously/39231690#39231690
-    fibonacci_rpc = FibonacciRpcClient()
+    ml_rpc = MLRpcClient()
     print(" [x] Requesting fib(30)")
-    if model == 'suma':
-        response.append(fibonacci_rpc.call_suma(30))
-    elif model == 'fibo':
-        response.append(fibonacci_rpc.call_fibo(30))
+    if model == 'svm':
+        response.append(ml_rpc.call_svm(dataset, target, test))
+    elif model == 'xgboost':
+        response.append(ml_rpc.call_xgboost(dataset, target, test))
+    elif model == 'logistic':
+        response.append(ml_rpc.call_logistic(dataset, target, test))
+    elif model == 'linear':
+        response.append(ml_rpc.call_linear(dataset, target, test))
     print(" [.] Got %r" % response[-1])
     return 1
 

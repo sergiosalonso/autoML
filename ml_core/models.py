@@ -12,8 +12,8 @@ class Process(models.Model):
     description = models.CharField(max_length=250, blank=True, verbose_name='Description')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    train = models.FloatField()
     test = models.FloatField()
+    target = models.CharField(max_length=250, blank=False, verbose_name='Target')
     csv = models.ForeignKey("CSVFiles", on_delete=models.SET_NULL, blank=False, null=True, related_name='csv')
     model= models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='model')
     machine= models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='instance')
@@ -34,7 +34,9 @@ class Process(models.Model):
 class CSVFiles(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='uploaded_by')
     file = models.FileField(upload_to="csv/")
-    
+
+    def __str__(self):
+        return os.path.basename(self.file.name)
 
 @receiver(post_delete, sender=CSVFiles)
 def submission_delete(sender, instance, **kwargs):

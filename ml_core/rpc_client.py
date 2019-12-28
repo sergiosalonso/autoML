@@ -2,7 +2,7 @@
 import pika
 import uuid
 
-class FibonacciRpcClient(object):
+class MLRpcClient(object):
 
     def __init__(self):
         credentials = pika.PlainCredentials('test', 'test')
@@ -25,39 +25,62 @@ class FibonacciRpcClient(object):
         if self.corr_id == props.correlation_id:
             self.response = body
 
-    def call_fibo(self, n):
+    def call_svm(self, dataset, target, test):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
             exchange='',
-            routing_key='rpc_queue_fibo',
+            routing_key='rpc_queue_svm',
             properties=pika.BasicProperties(
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=str(n))
+            body=str(dataset+" "+target+" "+test))
         while self.response is None:
             self.connection.process_data_events()
-        return int(self.response)
-    
-    def call_suma(self, n):
-        self.response = None
-        self.corr_id = str(uuid.uuid4())
-        self.channel.basic_publish(
-            exchange='',
-            routing_key='rpc_queue_suma',
-            properties=pika.BasicProperties(
-                reply_to=self.callback_queue,
-                correlation_id=self.corr_id,
-            ),
-            body=str(n))
-        while self.response is None:
-            self.connection.process_data_events()
-        return int(self.response)
+        return str(self.response)
 
-'''
-fibonacci_rpc = FibonacciRpcClient()
-print(" [x] Requesting fib(30)")
-response = fibonacci_rpc.call_fibo(30)
-print(" [.] Got %r" % response)
-'''
+    def call_xgboost(self, dataset, target, test):
+        self.response = None
+        self.corr_id = str(uuid.uuid4())
+        self.channel.basic_publish(
+            exchange='',
+            routing_key='rpc_queue_xgboost',
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue,
+                correlation_id=self.corr_id,
+            ),
+            body=str(dataset+" "+target+" "+test))
+        while self.response is None:
+            self.connection.process_data_events()
+        return str(self.response)
+
+    def call_linear(self, dataset, target, test):
+        self.response = None
+        self.corr_id = str(uuid.uuid4())
+        self.channel.basic_publish(
+            exchange='',
+            routing_key='rpc_queue_linear',
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue,
+                correlation_id=self.corr_id,
+            ),
+            body=str(dataset+" "+target+" "+test))
+        while self.response is None:
+            self.connection.process_data_events()
+        return str(self.response)
+
+    def call_logistic(self, dataset, target, test):
+        self.response = None
+        self.corr_id = str(uuid.uuid4())
+        self.channel.basic_publish(
+            exchange='',
+            routing_key='rpc_queue_logistic',
+            properties=pika.BasicProperties(
+                reply_to=self.callback_queue,
+                correlation_id=self.corr_id,
+            ),
+            body=str(dataset+" "+target+" "+test))
+        while self.response is None:
+            self.connection.process_data_events()
+        return str(self.response)
