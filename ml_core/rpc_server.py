@@ -60,7 +60,7 @@ def on_request1(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request2(ch, method, props, body):
-    body = str(body)..decode('utf-8')split()
+    body = str(body).decode('utf-8')split()
     df=get_dataset(body[0])
     print(" [.] xgboost")
     X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], body[2])
