@@ -12,7 +12,7 @@ class Process(models.Model):
     description = models.CharField(max_length=250, blank=True, verbose_name='Description')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    test = models.FloatField()
+    test = models.IntegerField()
     target = models.CharField(max_length=250, blank=False, verbose_name='Target')
     csv = models.ForeignKey("CSVFiles", on_delete=models.SET_NULL, blank=False, null=True, related_name='csv')
     model= models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='model')
