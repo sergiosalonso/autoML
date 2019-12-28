@@ -7,6 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LinearRegression
 import pickle
 def get_dataset(dataset):
     return pd.read_csv(dataset)
