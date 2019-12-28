@@ -5,6 +5,7 @@ from accounts.models import User
 from django.utils import timezone
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+import os
 class Process(models.Model):
     title = models.CharField(max_length=250, blank=False, verbose_name='Title')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Creador', related_name='created_by')
