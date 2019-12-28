@@ -39,8 +39,8 @@ def linear(X_train, X_test, y_train, y_test):
     pickle.dump(model, open("regression.pkl", 'wb'))
     return model.score(X_test, y_test)
 
-def xgboost(X_train, X_test, y_train, y_test):
-    xgboost = xgb.XGBRegressor(objective ='reg:linear', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
+def xgboost_regressor(X_train, X_test, y_train, y_test):
+    xgboost = xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
     model = xgboost.fit(X_train, y_train)
     predictions = model.predict(X_test)
     pickle.dump(model, open("xgboost.pkl", 'wb'))
@@ -65,7 +65,7 @@ def on_request2(ch, method, props, body):
     df=get_dataset(body[0])
     print(" [.] xgboost")
     X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
-    response = xgboost(X_train, X_test, y_train, y_test)
+    response = xgboost_regressor(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
