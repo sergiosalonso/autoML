@@ -189,6 +189,10 @@ def autostart(machine):
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('''
     sudo apt-get update \
     && sudo apt-get --assume-yes install python3-pip \
+    && sudo pip3 install xgboost \
+    && sudo pip3 install numpy \
+    && sudo pip3 install pandas \
+    pip install scikit-learn \
     && sudo pip3 install pika \
     && sudo apt-get --assume-yes install rabbitmq-server \
     && sudo chmod 666 /var/lib/rabbitmq/.erlang.cookie \
