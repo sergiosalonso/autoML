@@ -165,7 +165,7 @@ def execute_server_code(machine, csv):
 def rpc(model, dataset, target, test):
     #https://stackoverflow.com/questions/31834743/get-output-from-a-paramiko-ssh-exec-command-continuously/39231690#39231690
     ml_rpc = MLRpcClient()
-    print(" [x] Requesting fib(30)")
+    print(" [x] Requesting "+model)
     if model == 'svm':
         response.append(ml_rpc.call_svm(dataset, target, test))
     elif model == 'xgboost':
