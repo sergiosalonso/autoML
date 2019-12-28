@@ -152,7 +152,7 @@ def execute_server_code(machine, csv):
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
     scp_command='scp -i ml_core/cluster1.pem media/csv/'+csv+' ubuntu@'+machine+':/home/ubuntu'
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(scp_command+" && python3 rpc_server.py", get_pty=True, timeout=7.0)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command(scp_command+" && python3 rpc_server.py", get_pty=True, timeout=10.0)
     #time.sleep(2)
     ssh_stdin.flush()
 
