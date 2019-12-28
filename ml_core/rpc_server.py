@@ -8,6 +8,7 @@ from sklearn.svm import SVC
 import xgboost as xgb
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
 import pickle
 def get_dataset(dataset):
     return pd.read_csv(dataset)
@@ -44,7 +45,7 @@ def xgboost_regressor(X_train, X_test, y_train, y_test):
     model = xgboost.fit(X_train, y_train)
     predictions = model.predict(X_test)
     pickle.dump(model, open("xgboost.pkl", 'wb'))
-    return accuracy_score(y_test, predictions)
+    return mean_squared_error(y_test, predictions)
 
 def on_request1(ch, method, props, body):
     body = body.decode('utf-8').split()
