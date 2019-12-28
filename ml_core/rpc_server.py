@@ -33,7 +33,7 @@ def logistic(X_train, X_test, y_train, y_test):
     return model.score(X_test, y_test)
 
 def linear(X_train, X_test, y_train, y_test):
-    lm = linear_model.LinearRegression()
+    lm = LinearRegression()
     model = lm.fit(X_train, y_train)
     #predictions = lm.predict(X_test)
     pickle.dump(model, open("regression.pkl", 'wb'))
