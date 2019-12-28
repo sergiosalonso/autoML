@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
-from xgboost import XGBClassifier
+import xgboost as xgb
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LinearRegression
 import pickle
@@ -40,7 +40,7 @@ def linear(X_train, X_test, y_train, y_test):
     return model.score(X_test, y_test)
 
 def xgboost(X_train, X_test, y_train, y_test):
-    xgboost = XGBClassifier()
+    xgboost = xgb.XGBRegressor(objective ='reg:linear', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
     model = xgboost.fit(X_train, y_train)
     predictions = model.predict(X_test)
     pickle.dump(model, open("xgboost.pkl", 'wb'))
