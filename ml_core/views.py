@@ -10,7 +10,7 @@ import paramiko
 import os
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
-    fields = ('title', 'description', 'train', 'test', 'csv', 'model', 'machine')
+    fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
     template_name='process/create_process.html'
 
     def get_success_url(self):
@@ -28,7 +28,7 @@ class CreateProcess(LoginRequiredMixin, CreateView):
 
 class UpdateProcess(LoginRequiredMixin,UpdateView):
     model = Process
-    fields = ('title', 'description', 'train', 'test', 'csv', 'model', 'machine')
+    fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
     template_name='process/update_process.html'
     def get_success_url(self):
         return reverse('ml_core:list-process')
