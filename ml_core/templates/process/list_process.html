@@ -2,6 +2,8 @@
 {% block content %}
 <h1>My processes</h1>
 
+<a class="nav-link" href="{%url 'ml_core:create-process'%}">Create csv</a>
+
 <div class="row">
   {% for process in process_list %}
     <div class="col-md-4 col-sm-12">
