@@ -2,6 +2,7 @@
 {% block content %}
 
 <form method="post">
+  <div class="form-group">
   {% csrf_token %}
   {{ form.as_p}}
   <input type="Submit" value="Create" class='btn btn-default'>
