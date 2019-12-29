@@ -15,7 +15,6 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav justify-content-end">
           {% if user.is_authenticated %}
           <!--
@@ -58,13 +57,10 @@
               <a class="dropdown-item" href="{% url 'accounts:signup' %}">Sign Up</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
-
+          <li>
           </li>
-
         </ul>
       </div>
-    </div>
     </nav>
     <div class="container content">
       {% block content %}
