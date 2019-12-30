@@ -30,7 +30,7 @@
             <a class="nav-link" href="{% url 'ml_core:create-instance' %}">Create Instance</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" href="#" aria-expanded="false">{{user.name}}</a>
+            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" href="#" aria-expanded="false">{{user.username}}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{%url 'admin:index'%}">Admin</a>
               <a class="dropdown-item" href="{% url 'accounts:change-password' %}" >Change Password</a>
