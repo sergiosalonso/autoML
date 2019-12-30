@@ -143,7 +143,7 @@ class DeleteInstance(LoginRequiredMixin,DeleteView):
 class ListInstances(LoginRequiredMixin,ListView):
     model=AwsInstance
     context_object_name='instance_list'
-    template_name='process/list_instance.html'
+    template_name='process/list_instances.html'
     def get_queryset(self):
         '''
             Filter by user
