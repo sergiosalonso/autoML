@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{% block content %}
+
+<style>
+  h1{margin-top:5%;text-align:center;}
+  .create{text-align: center;
+    font-size: 20px;
+    margin-bottom: 2%;}
+
+  </style>
+
+<h1>My Instances</h1>
+
+<a class="nav-link create" href="{%url 'ml_core:create-instance'%}">Create Instance</a>
+
+<div class="row">
+  {% for instance in instance_list %}
+    <div class="col-md-4 col-sm-12">
+        <div class="card h-100 text-center">
+          <div class="card-header h-100">
+            <h5 class="card-title text-align"><a href="{%url 'ml_core:process' pk=process.id%}">{{instance.name}}</a></h5>
+            <h5 class="card-title text-align"><a href="{%url 'ml_core:process' pk=process.id%}">{{instance.public_ip}}</a></h5>
+            <table>
+            {%if user == process.user %}
+              <tr>
+                <td><a class="btn btn-warning" href="{% url 'ml_core:update-instance' pk=awsInstance.id %}">Update</a></td>
+                <td><a class="btn btn-danger" href="{% url 'ml_core:delete-instance' pk=awsInstance.id %}">Delete</a></td>
+              </tr>
+
+            {% endif %}
+            </table>
+          </div>
+        </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

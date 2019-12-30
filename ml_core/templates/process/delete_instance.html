@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Delete {{awsInstance.name}}</h1>
+  <form method="post">
+    {%csrf_token%}
+  <input type="submit" class="btn btn-danger"value="Delete">
+  <a href="{%url 'ml_core:list-instance'%}">Cancel</a>
+  </form>
+
+{% endblock %}

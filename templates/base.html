@@ -24,10 +24,10 @@
         <ul class="navbar-nav justify-content-end">
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'ml_core:list-csv' %}">List csv</a>
+            <a class="nav-link" href="{% url 'ml_core:list-csv' %}">Datasets</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'ml_core:create-instance' %}">Create Instance</a>
+            <a class="nav-link" href="{% url 'ml_core:list-instances' %}">Instances</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" href="#" aria-expanded="false">{{user.username}}</a>
@@ -39,20 +39,6 @@
 
             </div>
           </li>
-          <!--
-          <li class="nav-item">
-            <a class="nav-link" href="{%url 'accounts:logout'%}">Log Out</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'accounts:change-password' %}">Change Passwords</a>
-          </li>
-        -->
-
-          <!--<li class="nav-item">
-            <a class="nav-link" href="{% url 'ml_core:create-process' %}">Create Process</a>
-          </li>-->
-
           {% else %}
 
           <li class="nav-item">

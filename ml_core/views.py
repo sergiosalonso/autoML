@@ -121,6 +121,36 @@ class CreateInstance(LoginRequiredMixin, CreateView):
         print(self.object.public_ip)
         return super().form_valid(form)
 
+class UpdateInstance(LoginRequiredMixin,UpdateView):
+    model = AwsInstance
+    fields = ('name','public_ip')
+    template_name='process/update_instance.html'
+    def get_success_url(self):
+        return reverse('ml_core:list-instances')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user.id)
+
+class DeleteInstance(LoginRequiredMixin,DeleteView):
+    model=AwsInstance
+    success_url= reverse_lazy('ml_core:list-instances')
+    template_name='process/delete_instance.html'
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user.id)
+
+class ListInstances(LoginRequiredMixin,ListView):
+    model=AwsInstance
+    context_object_name='instance_list'
+    template_name='process/list_instance.html'
+    def get_queryset(self):
+        '''
+            Filter by user
+        '''
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user.id)
+
 response=[]
 class RPCRecieverTest(LoginRequiredMixin, TemplateView):
     template_name = "process/rpc.html"

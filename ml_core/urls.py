@@ -14,4 +14,7 @@ urlpatterns = [
     path('csv/delete/<int:pk>', views.DeleteCSV.as_view(), name='delete-csv'),
     path('execute/<str:model>/<str:machine>/<str:csv>/<str:target>/<int:test>', views.RPCRecieverTest.as_view(), name='execute'),
     path('instance/create/', views.CreateInstance.as_view(), name='create-instance'),
+    path('instance/delete/<int:pk>', views.DeleteInstance.as_view(), name='delete-instance'),
+    path('instance/list/', views.ListInstances.as_view(), name='list-instance'),
+    path('instance/update/<int:pk>', views.UpdateInstance.as_view(), name='update-instance'),
 ]
