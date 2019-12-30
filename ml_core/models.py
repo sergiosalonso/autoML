@@ -57,6 +57,7 @@ class MLModel(models.Model):
         return self.name
 
 class AwsInstance(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='instances_from')
     name = models.CharField(max_length=250, blank=False, unique=True, verbose_name='Name')
     public_ip = models.CharField(max_length=250, blank=False, unique=True, verbose_name='ip')
 
