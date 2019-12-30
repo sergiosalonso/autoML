@@ -23,6 +23,22 @@
         </button>
         <ul class="navbar-nav justify-content-end">
           {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ml_core:list-csv' %}">List csv</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ml_core:create-instance' %}">Create Instance</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" href="#" aria-expanded="false">{{user.name}}</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{%url 'admin:index'%}">Admin</a>
+              <a class="dropdown-item" href="{% url 'accounts:change-password' %}" >Change Password</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{%url 'accounts:logout'%}">Log Out</a>
+
+            </div>
+          </li>
           <!--
           <li class="nav-item">
             <a class="nav-link" href="{%url 'accounts:logout'%}">Log Out</a>
@@ -36,33 +52,17 @@
           <!--<li class="nav-item">
             <a class="nav-link" href="{% url 'ml_core:create-process' %}">Create Process</a>
           </li>-->
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'ml_core:list-csv' %}">List csv</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'ml_core:create-instance' %}">Create Instance</a>
-          </li>
+
           {% else %}
-          <!--
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'accounts:login' %}">Log In</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
           </li>
-        -->
           {% endif %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" href="#" aria-expanded="false">User</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="{%url 'admin:index'%}">Admin</a>
-              <a class="dropdown-item" href="{% url 'accounts:change-password' %}" >Change Password</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'accounts:login' %}">Log In</a>
-              <a class="dropdown-item" href="{%url 'accounts:logout'%}">Log Out</a>
-              <a class="dropdown-item" href="{% url 'accounts:signup' %}">Sign Up</a>
-            </div>
-          </li>
+
           <li>
           </li>
         </ul>
