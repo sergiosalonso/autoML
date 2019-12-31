@@ -116,6 +116,7 @@ class CreateInstance(LoginRequiredMixin, CreateView):
             Add validation and execute process
         '''
         self.object = form.save(commit=False)
+        self.object.user = self.request.user
         autostart(self.object.public_ip)
         self.object.save()
         print(self.object.public_ip)
