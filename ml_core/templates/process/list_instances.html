@@ -23,8 +23,8 @@
             <table>
             {%if user == instance.user %}
               <tr>
-                <td><a class="btn btn-warning" href="{% url 'ml_core:update-instance' pk=awsInstance.id %}">Update</a></td>
-                <td><a class="btn btn-danger" href="{% url 'ml_core:delete-instance' pk=awsInstance.id %}">Delete</a></td>
+                <td><a class="btn btn-warning" href="{% url 'ml_core:update-instance' pk=instance.id %}">Update</a></td>
+                <td><a class="btn btn-danger" href="{% url 'ml_core:delete-instance' pk=instance.id %}">Delete</a></td>
               </tr>
 
             {% endif %}
