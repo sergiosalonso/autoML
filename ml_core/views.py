@@ -127,7 +127,7 @@ class UpdateInstance(LoginRequiredMixin,UpdateView):
     fields = ('name','public_ip')
     template_name='process/update_instance.html'
     def get_success_url(self):
-        return reverse('ml_core:list-instances')
+        return reverse('ml_core:list-instance')
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -135,7 +135,7 @@ class UpdateInstance(LoginRequiredMixin,UpdateView):
 
 class DeleteInstance(LoginRequiredMixin,DeleteView):
     model=AwsInstance
-    success_url= reverse_lazy('ml_core:list-instances')
+    success_url= reverse_lazy('ml_core:list-instance')
     template_name='process/delete_instance.html'
     def get_queryset(self):
         queryset = super().get_queryset()
