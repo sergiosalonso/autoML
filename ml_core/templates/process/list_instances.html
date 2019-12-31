@@ -18,8 +18,8 @@
     <div class="col-md-4 col-sm-12">
         <div class="card h-100 text-center">
           <div class="card-header h-100">
-            <h5 class="card-title text-align"><a href="{%url 'ml_core:process' pk=process.id%}">{{instance.name}}</a></h5>
-            <h5 class="card-title text-align"><a href="{%url 'ml_core:process' pk=process.id%}">{{instance.public_ip}}</a></h5>
+            <h5 class="card-title text-align">{{instance.name}}</h5>
+            <h5 class="card-title text-align">{{instance.public_ip}}</h5>
             <table>
             {%if user == process.user %}
               <tr>
