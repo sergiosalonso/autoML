@@ -1,6 +1,11 @@
 {%extends 'base.html'%}
 {% block content %}
 
+<style>
+  form{margin-top:5%;}
+</style>
+
+
 <form method="post">
   {% csrf_token %}
   {{ form.as_p}}
