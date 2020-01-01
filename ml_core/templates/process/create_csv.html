@@ -1,5 +1,8 @@
 {%extends 'base.html'%}
 {% block content %}
+<style>
+  form{margin-top:5%;}
+</style>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
