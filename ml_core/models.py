@@ -16,6 +16,7 @@ class Process(models.Model):
     test = models.IntegerField()
     target = models.CharField(max_length=250, blank=False, verbose_name='Target')
     csv = models.ForeignKey("CSVFiles", on_delete=models.SET_NULL, blank=False, null=True, related_name='csv')
+    model_binary = models.FileField(upload_to="model/")
     model= models.ForeignKey("MLModel", on_delete=models.SET_NULL, blank=True, null=True, related_name='model')
     machine= models.ForeignKey("AwsInstance", on_delete=models.SET_NULL, blank=True, null=True, related_name='instance')
 

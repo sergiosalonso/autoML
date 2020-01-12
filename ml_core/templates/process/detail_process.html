@@ -12,7 +12,8 @@
   <p>Train: {{process.train}}</p>
   <p>Test: {{process.test}}</p>
   <p>CSV: {{process.csv}}</p>
-  <p>Models: process.ml_models</p>
+  <p>Model: process.ml_models.name</p>
+  <a href="{{process.model_binary.url}}" download><button type="button" name="button">Download</button></a>
   <table>
     <tr>
       <td><a class="btn btn-warning" href="{% url 'ml_core:update-process' pk=process.id %}">Update</a></td>

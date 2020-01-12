@@ -19,7 +19,7 @@
         <div class="card h-100 text-center">
           <div class="card-header h-100">
             <h5 class="card-title text-align"><a href="{%url 'ml_core:process' pk=process.id%}">{{process.title}}</a></h5>
-            <a class="btn btn-success" href="{% url 'ml_core:execute' model=process.model machine=process.machine.public_ip csv=process.csv.name target=process.target test=process.test%}">Execute</a>
+            <a class="btn btn-success" href="{% url 'ml_core:execute' process-pk=process.pk%}">Execute</a>
           </div>
         </div>
     </div>
