@@ -16,7 +16,7 @@
     <div class="col-md-4 col-sm-12">
         <div class="card h-100 text-center">
           <div class="card-header h-100">
-            <h5 class="card-title text-align">{{csv.name}}</h5>
+            <a href="{{csv.file.url}}"><h5 class="card-title text-align">{{csv.name}}</h5></a>
             <form method="post" action="{% url 'ml_core:delete-csv' pk=csv.id %}">
               {%csrf_token%}
               <input type="submit" class="btn btn-danger"value="Delete">
