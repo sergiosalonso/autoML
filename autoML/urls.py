@@ -26,3 +26,5 @@ urlpatterns = [
     path('logout-succes/', views.LogOutView.as_view(), name='success-logout'),
     path('login-succes/', views.LogInView.as_view(), name='success-login'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
