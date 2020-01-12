@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+  form{margin-top:5%;}
+</style>
+
   <h1>Delete {{process.title}}</h1>
   <form method="post">
     {%csrf_token%}
