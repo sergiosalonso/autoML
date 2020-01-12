@@ -163,8 +163,8 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         process= Process.objects.get(pk=self.kwargs['pk'])
         print(process.machine.public_ip)
         print(process.csv)
-        thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip, process.csv,))
-        thread2 = threading.Thread(target = rpc, args = (process.model.name, process.csv, process.target, process.test,))
+        thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip, process.csv.name,))
+        thread2 = threading.Thread(target = rpc, args = (process.model.name, process.csv.name, process.target, process.test,))
         thread1.start()
 
         thread2.start()
