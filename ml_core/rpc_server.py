@@ -24,28 +24,28 @@ def basic_preprocessing(df, target, test=0.75):
 def svm(X_train, X_test, y_train, y_test):
     svm = SVC()
     model=svm.fit(X_train, y_train)
-    pickle.dump(model, open("svm.pkl", 'wb'))
-    return model.score(X_test, y_test)
-
+    #pickle.dump(model, open("svm.pkl", 'wb'))
+    #return model.score(X_test, y_test)
+    return pickle.dump(model)
 def logistic(X_train, X_test, y_train, y_test):
     lr = LogisticRegression(random_state=0).fit(X_train, y_train)
     model=lr.fit(X_train, y_train)
-    pickle.dump(model, open("LR.pkl", 'wb'))
-    return model.score(X_test, y_test)
-
+    #pickle.dump(model, open("LR.pkl", 'wb'))
+    #return model.score(X_test, y_test)
+    return pickle.dump(model)
 def linear(X_train, X_test, y_train, y_test):
     lm = LinearRegression()
     model = lm.fit(X_train, y_train)
     #predictions = lm.predict(X_test)
-    pickle.dump(model, open("regression.pkl", 'wb'))
-    return model.score(X_test, y_test)
-
+    #pickle.dump(model, open("regression.pkl", 'wb'))
+    #return model.score(X_test, y_test)
+    return pickle.dump(model)
 def xgboost_regressor(X_train, X_test, y_train, y_test):
     xgboost = xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
     model = xgboost.fit(X_train, y_train)
-    predictions = model.predict(X_test)
-    pickle.dump(model, open("xgboost.pkl", 'wb'))
-    return mean_squared_error(y_test, predictions)
+    #predictions = model.predict(X_test)
+    return pickle.dump(model)
+    #return mean_squared_error(y_test, predictions)
 
 def on_request1(ch, method, props, body):
     body = body.decode('utf-8').split()
@@ -58,7 +58,7 @@ def on_request1(ch, method, props, body):
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
                                                          props.correlation_id),
-                     body=str(response))
+                     body=response)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request2(ch, method, props, body):
@@ -72,7 +72,7 @@ def on_request2(ch, method, props, body):
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
                                                          props.correlation_id),
-                     body=str(response))
+                     body=response)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request3(ch, method, props, body):
@@ -86,7 +86,7 @@ def on_request3(ch, method, props, body):
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
                                                          props.correlation_id),
-                     body=str(response))
+                     body=response)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request4(ch, method, props, body):
@@ -100,7 +100,7 @@ def on_request4(ch, method, props, body):
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
                                                          props.correlation_id),
-                     body=str(response))
+                     body=response)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 if __name__ == '__main__':

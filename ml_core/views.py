@@ -171,8 +171,11 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         thread2.join()
         thread1.join()
 
-        context['message']=response.pop()
-
+        model=response.pop()
+        if model:
+            print(type(model))
+            
+        process.model_binary=model
         return context
 
 def execute_server_code(machine, csv):
