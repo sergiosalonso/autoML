@@ -26,26 +26,26 @@ def svm(X_train, X_test, y_train, y_test):
     model=svm.fit(X_train, y_train)
     pickle.dump(model, open("svm.pkl", 'wb'))
     #return model.score(X_test, y_test)
-    return open("svm.pkl", 'wb')
+    return pickle.load(open("xgboost.pkl", 'rb'))
 def logistic(X_train, X_test, y_train, y_test):
     lr = LogisticRegression(random_state=0).fit(X_train, y_train)
     model=lr.fit(X_train, y_train)
     pickle.dump(model, open("LR.pkl", 'wb'))
     #return model.score(X_test, y_test)
-    return open("LR.pkl", 'wb')
+    return pickle.load(open("xgboost.pkl", 'rb'))
 def linear(X_train, X_test, y_train, y_test):
     lm = LinearRegression()
     model = lm.fit(X_train, y_train)
     #predictions = lm.predict(X_test)
     pickle.dump(model, open("regression.pkl", 'wb'))
     #return model.score(X_test, y_test)
-    return open("regression.pkl", 'wb')
+    return pickle.load(open("xgboost.pkl", 'rb'))
 def xgboost_regressor(X_train, X_test, y_train, y_test):
     xgboost = xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
     model = xgboost.fit(X_train, y_train)
     #predictions = model.predict(X_test)
     pickle.dump(model, open("xgboost.pkl", 'wb'))
-    return open("xgboost.pkl", 'wb')
+    return pickle.load(open("xgboost.pkl", 'rb'))
     #return mean_squared_error(y_test, predictions)
 
 def on_request1(ch, method, props, body):
