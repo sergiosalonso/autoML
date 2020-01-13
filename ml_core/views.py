@@ -189,7 +189,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
             context['machine']=process.machine.public_ip
             context['model']=process.model.name
             context['csv']=process.csv.name
-            pickle.dump(task['model'], open('model/'+task['name']+".pkl", 'wb'))
+            pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
         process.model_binary="model/linear.pkl"
         process.save()
         return context
