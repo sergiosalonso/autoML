@@ -1,7 +1,7 @@
 
 import pika
 import uuid
-
+import pickle
 class MLRpcClient(object):
 
     def __init__(self):
@@ -38,7 +38,7 @@ class MLRpcClient(object):
             body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
-        return str(self.response)
+        return self.response
 
     def call_xgboost(self, dataset, target, test):
         self.response = None
@@ -53,7 +53,7 @@ class MLRpcClient(object):
             body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
-        return str(self.response)
+        return self.response
 
     def call_linear(self, dataset, target, test):
         self.response = None
@@ -68,7 +68,7 @@ class MLRpcClient(object):
             body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
-        return str(self.response)
+        return self.response
 
     def call_logistic(self, dataset, target, test):
         self.response = None
@@ -83,4 +83,4 @@ class MLRpcClient(object):
             body=str(dataset+" "+target+" "+str(test)))
         while self.response is None:
             self.connection.process_data_events()
-        return str(self.response)
+        return self.response

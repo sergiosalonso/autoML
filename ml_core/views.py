@@ -8,6 +8,7 @@ import threading
 import time
 import paramiko
 import os
+import pickle
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
     fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
@@ -174,8 +175,8 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         model=response.pop()
         if model:
             print(type(model))
-            
-        process.model_binary=model
+
+        process.model_binary=pickle.loads(model)
         return context
 
 def execute_server_code(machine, csv):
