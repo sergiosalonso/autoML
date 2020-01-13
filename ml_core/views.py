@@ -9,6 +9,15 @@ import time
 import paramiko
 import os
 import pickle
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+import xgboost as xgb
+from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
     fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
