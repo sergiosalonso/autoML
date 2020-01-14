@@ -9,6 +9,7 @@ import time
 import paramiko
 import os
 import pickle
+import Queue
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -18,6 +19,7 @@ import xgboost as xgb
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
+
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
     fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
@@ -163,6 +165,7 @@ class ListInstances(LoginRequiredMixin,ListView):
         return queryset.filter(user=self.request.user.id)
 
 response=[]
+
 class RPCRecieverTest(LoginRequiredMixin, TemplateView):
     template_name = "process/rpc.html"
     model=Process
@@ -175,16 +178,17 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         process= Process.objects.get(pk=self.kwargs['pk'])
         print(process.machine.public_ip)
         print(process.csv)
+        queue=Queue.Queue()
         pd_csv=pd.read_csv(process.csv.file)
         thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip,))
-        thread2 = threading.Thread(target = rpc, args = (process.model.name, pd_csv, process.target, process.test,))
+        thread2 = threading.Thread(target = rpc, args = (process.model.name, pd_csv, process.target, process.test, queue,))
 
         thread1.start()
         thread2.start()
         thread2.join()
         thread1.join()
-
-        task=response.pop()
+        task=queue.get()
+        #task=response.pop()
         print(len(response))
         if task:
             print(type(task))
@@ -222,19 +226,22 @@ def execute_server_code(machine):
 
     ssh.close()
 
-def rpc(model, dataset, target, test):
+def rpc(model, dataset, target, test, queue):
+
     #https://stackoverflow.com/questions/31834743/get-output-from-a-paramiko-ssh-exec-command-continuously/39231690#39231690
     ml_rpc = MLRpcClient()
     print(" [x] Requesting "+model)
     if model == 'svm':
-        response.append(ml_rpc.call_svm(dataset, target, test))
+        response = ml_rpc.call_svm(dataset, target, test)
     elif model == 'xgboost':
-        response.append(ml_rpc.call_xgboost(dataset, target, test))
+        response = ml_rpc.call_xgboost(dataset, target, test)
     elif model == 'logistic':
-        response.append(ml_rpc.call_logistic(dataset, target, test))
+        response = ml_rpc.call_logistic(dataset, target, test)
     elif model == 'linear':
-        response.append(ml_rpc.call_linear(dataset, target, test))
+        response = ml_rpc.call_linear(dataset, target, test)
     print(" [.] Got %r" % response[-1])
+    queue.put(response)
+    queue.task_done()
     return 1
 
 def autostart(machine):
