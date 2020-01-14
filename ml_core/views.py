@@ -173,10 +173,11 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         process= Process.objects.get(pk=self.kwargs['pk'])
         print(process.machine.public_ip)
         print(process.csv)
-        thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip, process.csv.name,))
-        thread2 = threading.Thread(target = rpc, args = (process.model.name, process.csv.name, process.target, process.test,))
-        thread1.start()
+        print(process.csv.url)
+        thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip,))
+        thread2 = threading.Thread(target = rpc, args = (process.model.name, process.csv.url, process.target, process.test,))
 
+        thread1.start()
         thread2.start()
         thread2.join()
         thread1.join()
@@ -189,12 +190,14 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
             context['machine']=process.machine.public_ip
             context['model']=process.model.name
             context['csv']=process.csv.name
+            context['model_binary']=task['name']+".pkl"
             pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
-        process.model_binary="model/linear.pkl"
+        process.model_binary='model/'+task['name']+".pkl"
         process.save()
+
         return context
 
-def execute_server_code(machine, csv):
+def execute_server_code(machine):
 
     print('Conectando')
     ssh = paramiko.SSHClient()
@@ -204,8 +207,8 @@ def execute_server_code(machine, csv):
     #ec2-184-72-96-38.compute-1.amazonaws.com
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
-    scp_command='scp -i ml_core/cluster1.pem media/csv/'+csv+' ubuntu@'+machine+':/home/ubuntu'
-    os.system(scp_command)
+    #scp_command='scp -i ml_core/cluster1.pem media/csv/'+csv+' ubuntu@'+machine+':/home/ubuntu'
+    #os.system(scp_command)
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=10.0)
     #time.sleep(2)
     ssh_stdin.flush()

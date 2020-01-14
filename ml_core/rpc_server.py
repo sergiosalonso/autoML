@@ -51,10 +51,10 @@ def xgboost_regressor(X_train, X_test, y_train, y_test):
     return pickle.dumps({"model":model,"score":score, "name":name})
 
 def on_request1(ch, method, props, body):
-    body = body.decode('utf-8').split()
-    df=get_dataset(body[0])
+    body = pickle.loads(body)
+    df=body['dataset']
     print(" [.] svm")
-    X_train, X_test, y_train, y_test=basic_preprocessing(df, body[1], int(body[2])*0.01)
+    X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01)
     response = svm(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -65,10 +65,10 @@ def on_request1(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request2(ch, method, props, body):
-    body = body.decode('utf-8').split()
-    df=get_dataset(body[0])
+    body = pickle.loads(body)
+    df=body['dataset']
     print(" [.] xgboost")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01)
     response = xgboost_regressor(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -79,10 +79,10 @@ def on_request2(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request3(ch, method, props, body):
-    body = body.decode('utf-8').split()
-    df=get_dataset(body[0])
+    body = pickle.loads(body)
+    df=body['dataset']
     print(" [.] linear")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01)
     response = linear(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -93,10 +93,10 @@ def on_request3(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request4(ch, method, props, body):
-    body = body.decode('utf-8').split()
-    df=get_dataset(body[0])
+    body = pickle.loads(body)
+    df=body['dataset']
     print(" [.] logistic")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body[1], int(body[2])*0.01)
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01)
     response = logistic(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
