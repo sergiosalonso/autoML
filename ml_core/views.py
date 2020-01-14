@@ -190,7 +190,8 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
             print(type(task))
             task=pickle.loads(task)
             context['message']=task['score']
-            context['machine']=process.machine.public_ip
+            context['machine']=process.machine.name
+            context['machine_ip']=process.machine.public_ip
             context['model']=process.model.name
             context['csv']=process.csv.name
             pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
