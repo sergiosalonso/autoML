@@ -4,13 +4,13 @@
   form{margin-top:5%;}
 </style>
 
-<h1 class="checkout">{{model}} </h1>
-<h1 class="checkout">{{csv}} </h1>
-<h1 class="checkout">{{machine}}</h1>
-<h4 class="checkout">{{machine_ip}} </h4>
+<h1 class="checkout">Modelo: {{model}} </h1>
+<h1 class="checkout">CSV: {{csv}} </h1>
+<h1 class="checkout">Máquina: {{machine}}</h1>
+<h4 class="checkout">Ip: {{machine_ip}} </h4>
 <p>Score: {{message}}</p>
 
-<a href="{{model_binary}}" download><button type="button" name="button">Download</button></a>
+<a class="btn btn-success" href="{{model_binary}}" download>Download</a>
 
 
 {% endblock %}
