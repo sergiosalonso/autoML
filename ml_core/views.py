@@ -163,7 +163,7 @@ class ListInstances(LoginRequiredMixin,ListView):
         return queryset.filter(user=self.request.user.id)
 
 response=[]
-class RPCRecieverTest(LoginRequiredMixin, TemplateView):
+class RPCRecieverTest(LoginRequiredMixin, DetailView):
     template_name = "process/rpc.html"
     model=Process
     def get_context_data(self, **kwargs):
