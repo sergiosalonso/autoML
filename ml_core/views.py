@@ -194,10 +194,10 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
             context['model']=process.model.name
             context['csv']=process.csv.name
             pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
-            context['model_binary']='../media/model/'+task['name']+".pkl"
+            context['model_binary']='../../media/model/'+task['name']+".pkl"
         process.model_binary='model/'+task['name']+".pkl"
         process.save()
-        context['model_binary']=process.model_binary
+
         return context
 
 def execute_server_code(machine):
