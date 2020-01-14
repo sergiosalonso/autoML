@@ -166,6 +166,8 @@ response=[]
 class RPCRecieverTest(LoginRequiredMixin, DetailView):
     template_name = "process/rpc.html"
     model=Process
+    def __init__(self):
+        get_context_data()
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         #context['model']=self.kwargs['model']
@@ -193,7 +195,7 @@ class RPCRecieverTest(LoginRequiredMixin, DetailView):
             context['model']=process.model.name
             context['csv']=process.csv.name
             pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
-            
+
         process.model_binary='model/'+task['name']+".pkl"
         process.save()
         return context
