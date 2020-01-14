@@ -9,7 +9,7 @@ import time
 import paramiko
 import os
 import pickle
-import queue
+from queue import Queue
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -178,7 +178,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         process= Process.objects.get(pk=self.kwargs['pk'])
         print(process.machine.public_ip)
         print(process.csv)
-        queue=Queue.Queue()
+        queue=Queue()
         pd_csv=pd.read_csv(process.csv.file)
         thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip,))
         thread2 = threading.Thread(target = rpc, args = (process.model.name, pd_csv, process.target, process.test, queue,))
