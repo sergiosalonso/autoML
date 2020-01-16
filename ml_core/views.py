@@ -16,9 +16,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 import xgboost as xgb
-from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
+from sklearn.metrics import mean_squared_error
 
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
@@ -193,7 +192,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         if task:
             print(type(task))
             task=pickle.loads(task)
-            context['message']=task['score']
+            context['message']=task['mse']
             context['machine']=process.machine.name
             context['machine_ip']=process.machine.public_ip
             context['model']=process.model.name

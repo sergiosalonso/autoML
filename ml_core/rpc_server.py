@@ -6,9 +6,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 import xgboost as xgb
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_mse
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
+from sklearn.metrics import auc, accuracy_mse, confusion_matrix, mean_squared_error
 import pickle
 def get_dataset(dataset):
     return pd.read_csv(dataset)
@@ -24,31 +24,34 @@ def basic_preprocessing(df, target, test=0.75):
 def svm(X_train, X_test, y_train, y_test):
     svm = SVC()
     model=svm.fit(X_train, y_train)
-    score=model.score(X_test, y_test)
+    predictions = model.predict(X_test)
+    mse=mean_squared_error(y_test, predictions)
     name="svm"
-    return pickle.dumps({"model":model,"score":score, "name":name})
+    return pickle.dumps({"model":model,"mse":mse, "name":name})
 
 def logistic(X_train, X_test, y_train, y_test):
     lr = LogisticRegression(random_state=0).fit(X_train, y_train)
     model=lr.fit(X_train, y_train)
-    score=model.score(X_test, y_test)
+    predictions = model.predict(X_test)
+    mse=mean_squared_error(y_test, predictions)
     name="logistic"
-    return pickle.dumps({"model":model,"score":score, "name":name})
+    return pickle.dumps({"model":model,"mse":mse, "name":name})
 
 def linear(X_train, X_test, y_train, y_test):
     lm = LinearRegression()
     model = lm.fit(X_train, y_train)
-    score=model.score(X_test, y_test)
+    predictions = model.predict(X_test)
+    mse=mean_squared_error(y_test, predictions)
     name="linear"
-    return pickle.dumps({"model":model,"score":score, "name":name})
+    return pickle.dumps({"model":model,"mse":mse, "name":name})
 
 def xgboost_regressor(X_train, X_test, y_train, y_test):
     xgboost = xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
     model = xgboost.fit(X_train, y_train)
     predictions = model.predict(X_test)
-    score=mean_squared_error(y_test, predictions)
+    mse=mean_squared_error(y_test, predictions)
     name="xgboost"
-    return pickle.dumps({"model":model,"score":score, "name":name})
+    return pickle.dumps({"model":model,"mse":mse, "name":name})
 
 def on_request1(ch, method, props, body):
     body = pickle.loads(body)
