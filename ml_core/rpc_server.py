@@ -19,7 +19,7 @@ def basic_preprocessing(df, target, test=0.75, categorical=[]):
     features = df.columns
     X = pd.DataFrame(data=StandardScaler().fit_transform(df), columns=features)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test, random_state=0)
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test
 
 def svm(X_train, X_test, y_train, y_test):
     svm = SVC()
