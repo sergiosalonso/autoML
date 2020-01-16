@@ -21,7 +21,7 @@ from sklearn.metrics import mean_squared_error
 
 class CreateProcess(LoginRequiredMixin, CreateView):
     model = Process
-    fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
+    fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target', 'categorical')
     template_name='process/create_process.html'
 
     def get_success_url(self):
@@ -39,7 +39,7 @@ class CreateProcess(LoginRequiredMixin, CreateView):
 
 class UpdateProcess(LoginRequiredMixin,UpdateView):
     model = Process
-    fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target')
+    fields = ('title', 'description', 'test', 'csv', 'model', 'machine', 'target', 'categorical')
     template_name='process/update_process.html'
     def get_success_url(self):
         return reverse('ml_core:list-process')
