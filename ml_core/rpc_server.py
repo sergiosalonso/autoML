@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 import xgboost as xgb
-
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import pickle
@@ -15,7 +14,7 @@ def get_dataset(dataset):
 
 def basic_preprocessing(df, target, test=0.75,  categorical=[]):
     if categorical:
-        df = pd.get_dummies(df, columns=categorical)
+        df = pd.get_dummies(df, columns=[categorical])
 
     y=pd.DataFrame(df[target])
     df=df.drop([target], axis=1).copy()
