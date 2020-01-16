@@ -255,6 +255,7 @@ def autostart(machine):
     print('Lanzando comando')
 
     ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('''
+    --assume-yes\
     sudo apt-get update \
     && sudo apt-get --assume-yes install python3-pip \
     && sudo pip3 --no-cache-dir install xgboost \
