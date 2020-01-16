@@ -180,7 +180,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         queue=Queue()
         pd_csv=pd.read_csv(process.csv.file)
         thread1 = threading.Thread(target = execute_server_code, args = (process.machine.public_ip,))
-        thread2 = threading.Thread(target = rpc, args = (process.model.name, pd_csv, process.target, process.test, queue,))
+        thread2 = threading.Thread(target = rpc, args = (process.model.name, pd_csv, process.target, process.test, process.categorical,queue,))
 
         thread1.start()
         thread2.start()
@@ -225,19 +225,19 @@ def execute_server_code(machine):
 
     ssh.close()
 
-def rpc(model, dataset, target, test, queue):
+def rpc(model, dataset, target, test, categorical, queue):
 
     #https://stackoverflow.com/questions/31834743/get-output-from-a-paramiko-ssh-exec-command-continuously/39231690#39231690
     ml_rpc = MLRpcClient()
     print(" [x] Requesting "+model)
     if model == 'svm':
-        response = ml_rpc.call_svm(dataset, target, test)
+        response = ml_rpc.call_svm(dataset, target, test, categorical)
     elif model == 'xgboost':
-        response = ml_rpc.call_xgboost(dataset, target, test)
+        response = ml_rpc.call_xgboost(dataset, target, test, categorical)
     elif model == 'logistic':
-        response = ml_rpc.call_logistic(dataset, target, test)
+        response = ml_rpc.call_logistic(dataset, target, test, categorical)
     elif model == 'linear':
-        response = ml_rpc.call_linear(dataset, target, test)
+        response = ml_rpc.call_linear(dataset, target, test, categorical)
     print(" [.] Got %r" % response[-1])
     queue.put(response)
     queue.task_done()

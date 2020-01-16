@@ -25,7 +25,7 @@ class MLRpcClient(object):
         if self.corr_id == props.correlation_id:
             self.response = body
 
-    def call_svm(self, dataset, target, test):
+    def call_svm(self, dataset, target, test, categorical):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
@@ -35,12 +35,12 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=pickle.dumps({"dataset":dataset,"target":target, "test":test}))
+            body=pickle.dumps({"dataset":dataset,"target":target, "test":test, "categorical":categorical}))
         while self.response is None:
             self.connection.process_data_events()
         return self.response
 
-    def call_xgboost(self, dataset, target, test):
+    def call_xgboost(self, dataset, target, test, categorical):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
@@ -50,12 +50,12 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=pickle.dumps({"dataset":dataset,"target":target, "test":test}))
+            body=pickle.dumps({"dataset":dataset,"target":target, "test":test, "categorical":categorical}))
         while self.response is None:
             self.connection.process_data_events()
         return self.response
 
-    def call_linear(self, dataset, target, test):
+    def call_linear(self, dataset, target, test, categorical):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
@@ -65,12 +65,12 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=pickle.dumps({"dataset":dataset,"target":target, "test":test}))
+            body=pickle.dumps({"dataset":dataset,"target":target, "test":test, "categorical":categorical}))
         while self.response is None:
             self.connection.process_data_events()
         return self.response
 
-    def call_logistic(self, dataset, target, test):
+    def call_logistic(self, dataset, target, test, categorical):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
@@ -80,7 +80,7 @@ class MLRpcClient(object):
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
             ),
-            body=pickle.dumps({"dataset":dataset,"target":target, "test":test}))
+            body=pickle.dumps({"dataset":dataset,"target":target, "test":test, "categorical":categorical}))
         while self.response is None:
             self.connection.process_data_events()
         return self.response

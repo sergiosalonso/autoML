@@ -13,7 +13,10 @@ import pickle
 def get_dataset(dataset):
     return pd.read_csv(dataset)
 
-def basic_preprocessing(df, target, test=0.75):
+def basic_preprocessing(df, target, test=0.75,  categorical=[]):
+    if categorical:
+        df = pd.get_dummies(df, columns=categorical)
+
     y=pd.DataFrame(df[target])
     df=df.drop([target], axis=1).copy()
     features = df.columns
@@ -57,7 +60,7 @@ def on_request1(ch, method, props, body):
     body = pickle.loads(body)
     df=body['dataset']
     print(" [.] svm")
-    X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01)
+    X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
     response = svm(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -71,7 +74,7 @@ def on_request2(ch, method, props, body):
     body = pickle.loads(body)
     df=body['dataset']
     print(" [.] xgboost")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01)
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
     response = xgboost_regressor(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -85,7 +88,7 @@ def on_request3(ch, method, props, body):
     body = pickle.loads(body)
     df=body['dataset']
     print(" [.] linear")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01)
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
     response = linear(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
@@ -99,7 +102,7 @@ def on_request4(ch, method, props, body):
     body = pickle.loads(body)
     df=body['dataset']
     print(" [.] logistic")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01)
+    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
     response = logistic(X_train, X_test, y_train, y_test)
 
     ch.basic_publish(exchange='',
