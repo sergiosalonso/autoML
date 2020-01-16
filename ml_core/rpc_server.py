@@ -13,7 +13,7 @@ import pickle
 def basic_preprocessing(df, target, test=0.75, categorical=[]):
     if categorical:
         df = pd.get_dummies(df, columns=[categorical])
-        df = df.dropna(how='all', axis='columns').copy()   
+        df = df.dropna(how='all', axis='columns').copy()
     y=pd.DataFrame(df[target])
     df=df.drop([target], axis=1).copy()
     features = df.columns
