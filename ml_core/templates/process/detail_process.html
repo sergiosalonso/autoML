@@ -19,7 +19,7 @@
       <td><a class="btn btn-warning" href="{% url 'ml_core:update-process' pk=process.id %}">Update</a></td>
       <td><a class="btn btn-danger" href="{% url 'ml_core:delete-process' pk=process.id %}">Delete</a></td>
       {%if process.model_binary %}
-        <a class="btn btn-success" href="{{process.model_binary.url}}" download>Download</a>
+      <td><a class="btn btn-success" href="{{process.model_binary.url}}" download>Download</a></td>
       {% endif %}
     </tr>
 
