@@ -8,7 +8,7 @@ from sklearn.svm import SVC
 import xgboost as xgb
 
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_mse, mean_squared_error
+from sklearn.metrics import mean_squared_error
 import pickle
 def get_dataset(dataset):
     return pd.read_csv(dataset)
