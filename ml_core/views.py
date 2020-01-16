@@ -250,7 +250,7 @@ def autostart(machine):
     k=paramiko.RSAKey.from_private_key_file('ml_core/cluster1.pem')
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     print('Conectando')
-    ssh.load_system_host_keys() 
+    ssh.load_host_keys(os.path.expanduser('~/.ssh/known_hosts'))
     ssh.connect(hostname=machine, username='ubuntu', pkey=k)
     print('Lanzando comando')
 
