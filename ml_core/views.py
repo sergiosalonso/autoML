@@ -238,7 +238,7 @@ def rpc(model, dataset, target, test, categorical, queue):
         response = ml_rpc.call_logistic(dataset, target, test, categorical)
     elif model == 'linear':
         response = ml_rpc.call_linear(dataset, target, test, categorical)
-    print(" [.] Got %r" % response[-1])
+    print(" [.] Got %r" % response)
     queue.put(response)
     queue.task_done()
     return 1
