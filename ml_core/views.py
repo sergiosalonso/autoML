@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView, RedirectView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .models import Process, CSVFiles, AwsInstance
+from .models import Process, CSVFiles, AwsInstance, MLModel
 from .rpc_client import MLRpcClient
 import threading
 import time
@@ -162,6 +162,32 @@ class ListInstances(LoginRequiredMixin,ListView):
         '''
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user.id)
+
+class CreateModel(LoginRequiredMixin, CreateView):
+    model = Model
+    fields = ('name')
+    template_name='process/create_model.html'
+
+    def get_success_url(self):
+        return reverse('ml_core:list-models')
+
+class ListModels(LoginRequiredMixin,ListView):
+    model=MLModel
+    context_object_name='models'
+    template_name='process/list_models.html'
+
+class UpdateInstance(LoginRequiredMixin,UpdateView):
+    model = MLModel
+    fields = ('name')
+    template_name='process/update_model.html'
+    def get_success_url(self):
+        return reverse('ml_core:list-model')
+
+class DeleteModel(LoginRequiredMixin,DeleteView):
+    model=MLModel
+    success_url= reverse_lazy('ml_core:list-model')
+    template_name='process/delete_model.html'
+
 
 response=[]
 

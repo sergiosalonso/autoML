@@ -18,4 +18,8 @@ urlpatterns = [
     path('instance/delete/<int:pk>', views.DeleteInstance.as_view(), name='delete-instance'),
     path('instances/', views.ListInstances.as_view(), name='list-instance'),
     path('instance/update/<int:pk>', views.UpdateInstance.as_view(), name='update-instance'),
+    path('model/create/', views.CreateModel.as_view(), name='create-model'),
+    path('model/update/<int:pk>', views.UpdateModel.as_view(), name='update-model'),
+    path('model/delete/<int:pk>', views.DeleteModel.as_view(), name='delete-model'),
+    path('models/', views.ListModels.as_view(), name='list-model'),
 ]

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  form{margin-top:5%;}
+</style>
+
+  <h1>Delete {{model.name}}</h1>
+  <form method="post">
+    {%csrf_token%}
+  <input type="submit" class="btn btn-danger"value="Delete">
+  <a href="{%url 'ml_core:process' pk=model.id %}">Cancel</a>
+  </form>
+
+{% endblock %}
