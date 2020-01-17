@@ -165,7 +165,7 @@ class ListInstances(LoginRequiredMixin,ListView):
 
 class CreateModel(LoginRequiredMixin, CreateView):
     model = MLModel
-    fields = ('name')
+    fields = ('name',)
     template_name='process/create_model.html'
 
     def get_success_url(self):
@@ -178,7 +178,7 @@ class ListModels(LoginRequiredMixin,ListView):
 
 class UpdateModel(LoginRequiredMixin,UpdateView):
     model = MLModel
-    fields = ('name')
+    fields = ('name',)
     template_name='process/update_model.html'
     def get_success_url(self):
         return reverse('ml_core:list-model')
