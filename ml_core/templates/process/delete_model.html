@@ -8,7 +8,7 @@
   <form method="post">
     {%csrf_token%}
   <input type="submit" class="btn btn-danger"value="Delete">
-  <a href="{%url 'ml_core:process' pk=model.id %}">Cancel</a>
+  <a href="{%url 'ml_core:list-model' %}">Cancel</a>
   </form>
 
 {% endblock %}
