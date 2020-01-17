@@ -176,7 +176,7 @@ class ListModels(LoginRequiredMixin,ListView):
     context_object_name='models'
     template_name='process/list_models.html'
 
-class UpdateInstance(LoginRequiredMixin,UpdateView):
+class UpdateModel(LoginRequiredMixin,UpdateView):
     model = MLModel
     fields = ('name')
     template_name='process/update_model.html'
