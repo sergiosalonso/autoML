@@ -3,12 +3,12 @@
 <style>
   form{margin-top:5%;}
 </style>
-
+{% if user.is_superuser %}
   <h1>Delete {{model.name}}</h1>
   <form method="post">
     {%csrf_token%}
   <input type="submit" class="btn btn-danger"value="Delete">
   <a href="{%url 'ml_core:list-model' %}">Cancel</a>
   </form>
-
+{% endif %}
 {% endblock %}

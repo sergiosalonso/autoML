@@ -3,10 +3,11 @@
 <style>
   form{margin-top:5%;}
 </style>
-
+{% if user.is_superuser %}
 <form style="margin-top:5%" method="post">
   {% csrf_token %}
   {{ form.as_p}}
   <input type="Submit" value="Create" class='btn btn-primary'>
 </form>
+{% endif %}
 {% endblock %}

@@ -9,7 +9,7 @@
   table{margin-left:25%;}
   h5:nth-child(2){font-size:15px;}
   </style>
-
+{% if user.is_superuser %}
 <h1>Available Models</h1>
 
 <a class="nav-link create" href="{%url 'ml_core:create-model'%}">Create Model</a>
@@ -30,5 +30,6 @@
         </div>
     </div>
   {% endfor %}
+{% endif %}
 </div>
 {% endblock %}
