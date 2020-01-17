@@ -164,7 +164,7 @@ class ListInstances(LoginRequiredMixin,ListView):
         return queryset.filter(user=self.request.user.id)
 
 class CreateModel(LoginRequiredMixin, CreateView):
-    model = Model
+    model = MLModel
     fields = ('name')
     template_name='process/create_model.html'
 
