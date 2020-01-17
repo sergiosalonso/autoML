@@ -11,7 +11,7 @@ class SignUp(CreateView):
     template_name = 'accounts/signup.html'
     def form_valid(self, form):
         to_return =super().form_valid(form)
-        user=authenicate(
+        user=authenticate(
             username=form.cleaned_data["username"],
             password=form.cleaned_data["password"],
         )
