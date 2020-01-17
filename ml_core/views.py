@@ -169,7 +169,7 @@ class CreateModel(LoginRequiredMixin, CreateView):
     template_name='process/create_model.html'
 
     def get_success_url(self):
-        return reverse('ml_core:list-models')
+        return reverse('ml_core:list-model')
 
 class ListModels(LoginRequiredMixin,ListView):
     model=MLModel
