@@ -22,8 +22,8 @@
             <h5 class="card-title text-align">{{model.name}}</h5>
             <table>
               <tr>
-                <td><a class="btn btn-warning" href="{% url 'ml_core:update-model' pk=instance.id %}">Update</a></td>
-                <td><a class="btn btn-danger" href="{% url 'ml_core:delete-model' pk=instance.id %}">Delete</a></td>
+                <td><a class="btn btn-warning" href="{% url 'ml_core:update-model' pk=model.id %}">Update</a></td>
+                <td><a class="btn btn-danger" href="{% url 'ml_core:delete-model' pk=model.id %}">Delete</a></td>
               </tr>
             </table>
           </div>
