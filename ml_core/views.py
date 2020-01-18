@@ -222,7 +222,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         if task:
             print(type(task))
             task=pickle.loads(task)
-            if task['model']!=1:
+            if task['model']!=-1:
                 context['message']=task['mse']
                 pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
                 context['model_binary']='../../media/model/'+task['name']+".pkl"
