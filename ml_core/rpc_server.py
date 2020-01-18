@@ -54,12 +54,14 @@ def xgboost_regressor(X_train, X_test, y_train, y_test):
     return pickle.dumps({"model":model,"mse":mse, "name":name})
 
 def on_request1(ch, method, props, body):
-    body = pickle.loads(body)
-    df=body['dataset']
-    print(" [.] svm")
-    X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
-    response = svm(X_train, X_test, y_train, y_test)
-
+    try:
+        body = pickle.loads(body)
+        df=body['dataset']
+        print(" [.] svm")
+        X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
+        response = svm(X_train, X_test, y_train, y_test)
+    except:
+        response = -1
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -68,12 +70,14 @@ def on_request1(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request2(ch, method, props, body):
-    body = pickle.loads(body)
-    df=body['dataset']
-    print(" [.] xgboost")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
-    response = xgboost_regressor(X_train, X_test, y_train, y_test)
-
+    try:
+        body = pickle.loads(body)
+        df=body['dataset']
+        print(" [.] xgboost")
+        X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
+        response = xgboost_regressor(X_train, X_test, y_train, y_test)
+    except:
+        response = -1
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -82,12 +86,14 @@ def on_request2(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request3(ch, method, props, body):
-    body = pickle.loads(body)
-    df=body['dataset']
-    print(" [.] linear")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
-    response = linear(X_train, X_test, y_train, y_test)
-
+    try:
+        body = pickle.loads(body)
+        df=body['dataset']
+        print(" [.] linear")
+        X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
+        response = linear(X_train, X_test, y_train, y_test)
+    except:
+        response = -1
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -96,12 +102,14 @@ def on_request3(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def on_request4(ch, method, props, body):
-    body = pickle.loads(body)
-    df=body['dataset']
-    print(" [.] logistic")
-    X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
-    response = logistic(X_train, X_test, y_train, y_test)
-
+    try:
+        body = pickle.loads(body)
+        df=body['dataset']
+        print(" [.] logistic")
+        X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
+        response = logistic(X_train, X_test, y_train, y_test)
+    except:
+        response = -1
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \

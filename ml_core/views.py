@@ -214,19 +214,21 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         thread1.join()
         task=queue.get()
         #task=response.pop()
+        context['machine']=process.machine.name
+        context['machine_ip']=process.machine.public_ip
+        context['model']=process.model.name
+        context['csv']=process.csv.name
         print(len(response))
-        if task:
+        if task and task != -1:
             print(type(task))
             task=pickle.loads(task)
             context['message']=task['mse']
-            context['machine']=process.machine.name
-            context['machine_ip']=process.machine.public_ip
-            context['model']=process.model.name
-            context['csv']=process.csv.name
             pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
             context['model_binary']='../../media/model/'+task['name']+".pkl"
-        process.model_binary='model/'+task['name']+".pkl"
-        process.save()
+            process.model_binary='model/'+task['name']+".pkl"
+            process.save()
+        else:
+            context['message']="An error ocurred try using another model"
 
         return context
 
