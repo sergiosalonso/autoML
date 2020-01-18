@@ -60,7 +60,7 @@ def on_request1(ch, method, props, body):
         X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = svm(X_train, X_test, y_train, y_test)
     except:
-        response = str(-1)
+        response = pickle.dumps({"model":-1})
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -76,7 +76,7 @@ def on_request2(ch, method, props, body):
         X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = xgboost_regressor(X_train, X_test, y_train, y_test)
     except:
-        response = str(-1)
+        response = pickle.dumps({"model":-1})
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -92,7 +92,7 @@ def on_request3(ch, method, props, body):
         X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = linear(X_train, X_test, y_train, y_test)
     except:
-        response = str(-1)
+        response = pickle.dumps({"model":-1})
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -108,7 +108,7 @@ def on_request4(ch, method, props, body):
         X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = logistic(X_train, X_test, y_train, y_test)
     except:
-        response = str(-1)
+        response = pickle.dumps({"model":-1})
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \

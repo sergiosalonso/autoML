@@ -219,7 +219,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['model']=process.model.name
         context['csv']=process.csv.name
         print(len(response))
-        if task and task != "-1":
+        if task and task.decode("utf-8") != "-1":
             print(type(task))
             task=pickle.loads(task)
             context['message']=task['mse']
@@ -227,7 +227,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
             context['model_binary']='../../media/model/'+task['name']+".pkl"
             process.model_binary='model/'+task['name']+".pkl"
             process.save()
-        else:
+        else :
             context['message']="An error ocurred try using another model"
 
         return context
