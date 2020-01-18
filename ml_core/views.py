@@ -219,7 +219,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['model']=process.model.name
         context['csv']=process.csv.name
         print(len(response))
-        if task and task.decode("utf-8") != "-1":
+        if task and task['model']!= -1:
             print(type(task))
             task=pickle.loads(task)
             context['message']=task['mse']
@@ -227,7 +227,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
             context['model_binary']='../../media/model/'+task['name']+".pkl"
             process.model_binary='model/'+task['name']+".pkl"
             process.save()
-        else :
+        else:
             context['message']="An error ocurred try using another model"
 
         return context
@@ -244,7 +244,7 @@ def execute_server_code(machine):
     print('Lanzando comando')
     #scp_command='scp -i ml_core/cluster1.pem media/csv/'+csv+' ubuntu@'+machine+':/home/ubuntu'
     #os.system(scp_command)
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=10.0)
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("python3 rpc_server.py", get_pty=True, timeout=12.0)
     #time.sleep(2)
     ssh_stdin.flush()
 
