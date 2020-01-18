@@ -219,7 +219,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
         context['model']=process.model.name
         context['csv']=process.csv.name
         print(len(response))
-        if task and task != -1:
+        if task and task != "-1":
             print(type(task))
             task=pickle.loads(task)
             context['message']=task['mse']

@@ -48,10 +48,9 @@ def linear(X_train, X_test, y_train, y_test):
 def xgboost_regressor(X_train, X_test, y_train, y_test):
     xgboost = xgb.XGBRegressor(objective ='reg:squarederror', colsample_bytree = 0.3, learning_rate = 0.1,max_depth = 5, alpha = 10, n_estimators = 10)
     model = xgboost.fit(X_train, y_train)
-    predictions = model.predict(X_test)
-    mse=mean_squared_error(y_test, predictions)
+    score=model.score(X_test, y_test)
     name="xgboost"
-    return pickle.dumps({"model":model,"mse":mse, "name":name})
+    return pickle.dumps({"model":model,"mse":score, "name":name})
 
 def on_request1(ch, method, props, body):
     try:
@@ -61,7 +60,7 @@ def on_request1(ch, method, props, body):
         X_train, X_test, y_train, y_test=basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = svm(X_train, X_test, y_train, y_test)
     except:
-        response = -1
+        response = str(-1)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -77,7 +76,7 @@ def on_request2(ch, method, props, body):
         X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = xgboost_regressor(X_train, X_test, y_train, y_test)
     except:
-        response = -1
+        response = str(-1)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -93,7 +92,7 @@ def on_request3(ch, method, props, body):
         X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = linear(X_train, X_test, y_train, y_test)
     except:
-        response = -1
+        response = str(-1)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
@@ -109,7 +108,7 @@ def on_request4(ch, method, props, body):
         X_train, X_test, y_train, y_test = basic_preprocessing(df, body['target'], body['test']*0.01, body['categorical'])
         response = logistic(X_train, X_test, y_train, y_test)
     except:
-        response = -1
+        response = str(-1)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id = \
