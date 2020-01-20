@@ -9,7 +9,9 @@
   <h1 class="checkout">CSV: {{csv}} </h1>
   <h1 class="checkout">Máquina: {{machine}}</h1>
   <h4 class="checkout">Ip: {{machine_ip}} </h4>
+  {%if message%}
   <p>Score: {{message}}</p>
+  {%endif%}
   <a class="btn btn-success" href="{{model_binary}}" download>Download</a>
 {%endif%}
 
