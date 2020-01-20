@@ -25,16 +25,16 @@ def svm(X_train, X_test, y_train, y_test):
     svm = SVC()
     model=svm.fit(X_train, y_train)
     predictions = model.predict(X_test)
-    mse=mean_squared_error(y_test, predictions)
+    #mse=mean_squared_error(y_test, predictions)
     name="svm"
-    return pickle.dumps({"model":model,"mse":mse, "name":name})
+    return pickle.dumps({"model":model,"name":name})
 
 def logistic(X_train, X_test, y_train, y_test):
     lr = LogisticRegression(random_state=0).fit(X_train, y_train)
     model=lr.fit(X_train, y_train)
-    score=model.score(X_test, y_test)
+    #score=model.score(X_test, y_test)
     name="logistic"
-    return pickle.dumps({"model":model,"mse":score, "name":name})
+    return pickle.dumps({"model":model,"name":name})
 
 def linear(X_train, X_test, y_train, y_test):
     lm = LinearRegression()

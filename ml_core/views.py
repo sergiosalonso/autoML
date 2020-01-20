@@ -230,7 +230,7 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
                 process.model_binary='model/'+task['name']+".pkl"
                 process.save()
             else:
-                context['error']="An error ocurred try using another model"
+                context['error']="An error ocurred try using another model!"
 
         return context
 
