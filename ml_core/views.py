@@ -224,7 +224,8 @@ class RPCRecieverTest(LoginRequiredMixin, TemplateView):
                 context['machine_ip']=process.machine.public_ip
                 context['model']=process.model.name
                 context['csv']=process.csv.name
-                context['message']=task['mse']
+                if task['mse']:
+                    context['message']=task['mse']
                 pickle.dump(task['model'], open('media/model/'+task['name']+".pkl", 'wb'))
                 context['model_binary']='../../media/model/'+task['name']+".pkl"
                 process.model_binary='model/'+task['name']+".pkl"
