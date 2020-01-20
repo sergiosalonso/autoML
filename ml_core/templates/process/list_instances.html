@@ -22,13 +22,13 @@
             <h5 class="card-title text-align">{{instance.name}}</h5>
             <h5 class="card-title text-align">{{instance.public_ip}}</h5>
             <table>
-            {%if user == instance.user %}
+
               <tr>
                 <td><a class="btn btn-warning" href="{% url 'ml_core:update-instance' pk=instance.id %}">Update</a></td>
                 <td><a class="btn btn-danger" href="{% url 'ml_core:delete-instance' pk=instance.id %}">Delete</a></td>
               </tr>
 
-            {% endif %}
+        
             </table>
           </div>
         </div>

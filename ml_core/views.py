@@ -156,13 +156,14 @@ class ListInstances(LoginRequiredMixin,ListView):
     model=AwsInstance
     context_object_name='instance_list'
     template_name='process/list_instances.html'
+
     def get_queryset(self):
         '''
             Filter by user
         '''
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user.id)
-
+    
 class CreateModel(LoginRequiredMixin, CreateView):
     model = MLModel
     fields = ('name',)
